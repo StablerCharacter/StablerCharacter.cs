@@ -16,9 +16,10 @@ namespace StablerCharacter.Transition
 
         public sealed class FadeSquare : RenderObject
         {
-            FadeType fadeType;
+            readonly FadeType fadeType;
+            readonly float duration;
+
             Color color;
-            float duration;
             float time;
 
             public FadeSquare(float duration, Color fadeColor, FadeType fadeType)
@@ -50,8 +51,8 @@ namespace StablerCharacter.Transition
         /// <summary>
         /// The duration of the fade, in seconds.
         /// </summary>
-        public float duration = 2;
-        public Color fadeColor = Color.BLACK;
+        public float Duration = 2;
+        public Color FadeColor = Color.BLACK;
 
         /// <summary>
         /// Fade the fadeColor in.

@@ -23,7 +23,8 @@ namespace StablerCharacter
         public Dialog GetCurrentDialog() => currentBranch.GetCurrentDialog();
         
         public Dialog GetNextDialog() => currentBranch.GetNextDialog();
-        
+        public bool TryGetNextDialog(out Dialog dialog) => currentBranch.TryGetNextDialog(out dialog);
+
         public void SwitchBranch(string branchName)
         {
             if (!branches.TryGetValue(branchName, out Branch? branch))

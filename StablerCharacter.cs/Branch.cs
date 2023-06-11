@@ -4,12 +4,34 @@ namespace StablerCharacter
 {
     public sealed class Branch : IEquatable<Branch>
     {
-        public Dialog[] dialogs;
+        public Dialog[] Dialogs;
         int dialogIndex = 0;
 
         public Branch(Dialog[] dialogs)
         {
-            this.dialogs = dialogs;
+            this.Dialogs = dialogs;
+        }
+
+        public Dialog GetCurrentDialog() => Dialogs[dialogIndex];
+
+        public Dialog GetNextDialog() => Dialogs[++dialogIndex];
+        public bool TryGetNextDialog(out Dialog dialog)
+        {
+            if (++dialogIndex >= Dialogs.Length)
+            {
+                dialog = new();
+                return false;
+            }
+            dialog = Dialogs[dialogIndex];
+            return true;
+        }
+
+        public override string ToString()
+        {
+            List<string> list = new();
+            foreach (Dialog dialog in Dialogs)
+                list.Add(dialog.ToString());
+            return $"dialogIndex: {dialogIndex}\n{string.Join('\n', list)}";
         }
 
         public bool Equals(Branch? other)
@@ -17,24 +39,16 @@ namespace StablerCharacter
             if (this == other) return true;
             if (other == null) return false;
             if (dialogIndex != other.dialogIndex) return false;
-            if (dialogs.Length != other.dialogs.Length) return false;
-            for (ushort i = 0; i < dialogs.Length; i++)
+            if (Dialogs.Length != other.Dialogs.Length) return false;
+            for (ushort i = 0; i < Dialogs.Length; i++)
             {
-                if (!dialogs[i].Equals(other.dialogs[i])) return false;
+                if (!Dialogs[i].Equals(other.Dialogs[i])) return false;
             }
             return true;
         }
 
-        public Dialog GetCurrentDialog() => dialogs[dialogIndex];
+        public override bool Equals(object? obj) => Equals(obj as Branch);
 
-        public Dialog GetNextDialog() => dialogs[++dialogIndex];
-
-        public override string ToString()
-        {
-            List<string> list = new();
-            foreach (Dialog dialog in dialogs)
-                list.Add(dialog.ToString());
-            return $"dialogIndex: {dialogIndex}\n{string.Join('\n', list)}";
-        }
+        public override int GetHashCode() => Dialogs.Length.GetHashCode() + dialogIndex.GetHashCode();
     }
 }

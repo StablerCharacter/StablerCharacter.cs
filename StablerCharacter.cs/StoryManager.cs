@@ -14,6 +14,7 @@ namespace StablerCharacter
 
         public Dialog GetCurrentDialog() => chapters[chapterIndex].GetCurrentDialog();
         public Dialog GetNextDialog() => chapters[chapterIndex].GetNextDialog();
+        public bool TryGetNextDialog(out Dialog dialog) => chapters[chapterIndex].TryGetNextDialog(out dialog);
         public void SwitchBranch(string branchName) => chapters[chapterIndex].SwitchBranch(branchName);
         public void SwitchChapter(ushort chapterIndex) => this.chapterIndex = chapterIndex;
         /// <summary>

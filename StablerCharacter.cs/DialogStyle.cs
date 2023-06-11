@@ -185,7 +185,7 @@ namespace StablerCharacter
         // Elements *inside* the dialog box
         public TextInfo personSpeakingTextInfo = new()
         {
-            fontSize = 22
+            FontSize = 22
         };
         public TextInfo messageTextInfo = new();
 

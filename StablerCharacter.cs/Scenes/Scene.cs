@@ -7,21 +7,23 @@ namespace StablerCharacter.Scenes
     /// </summary>
     public class Scene
     {
-        public List<RenderObject> renderObjects = new();
+        public List<RenderObject> RenderObjects = new();
+        public bool HasBeenLoaded = false;
 
-        public void Render()
+        public virtual void Render()
         {
-            renderObjects.ForEach(x => x.Render());
+            RenderObjects.ForEach(x => x.Render());
         }
 
-        public void OnLoad()
+        public virtual void OnLoad()
         {
-            renderObjects.ForEach(x => x.OnStart());
+            RenderObjects.ForEach(x => x.OnStart());
+            HasBeenLoaded = true;
         }
 
-        public void OnUnload()
+        public virtual void OnUnload()
         {
-            renderObjects.ForEach(x => x.OnRemoved());
+            RenderObjects.ForEach(x => x.OnRemoved());
         }
     }
 }

@@ -1,28 +1,34 @@
 ﻿using Raylib_cs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StablerCharacter.RenderObjects
 {
-    public class Button : RenderObject
+    /// <summary>
+    /// A button.
+    /// 
+    /// This class ignores the TextInfo.Position field.
+    /// </summary>
+    public class Button : TextObject
     {
-        public Color backgroundColor;
-        public Vector2 position;
-        public Vector2 size;
-        public TextInfo textInfo;
-        public int textLeftMargin = 10;
+        public Color BackgroundColor;
+        public Vector2 Position;
+        public Vector2 Size;
+        public int TextLeftMargin = 10;
 
+        /// <summary>
+        /// Initialize a new Button RenderObject.
+        /// </summary>
+        /// <param name="backgroundColor">The background color of the button.</param>
+        /// <param name="position">The position of the button.</param>
+        /// <param name="size">The size of the button.</param>
+        /// <param name="textInfo">The information for the text inside the button.</param>
         public Button(Color backgroundColor, Vector2 position, Vector2 size, TextInfo textInfo)
         {
-            this.backgroundColor = backgroundColor;
-            this.position = position;
-            this.size = size;
-            this.textInfo = textInfo;
-            clickableArea = new Rectangle(position.X, position.Y, size.X, size.Y);
+            this.BackgroundColor = backgroundColor;
+            this.Position = position;
+            this.Size = size;
+            this.TextInfo = textInfo;
+            ClickableArea = new Rectangle(position.X, position.Y, size.X, size.Y);
         }
 
         public override void OnStart() { }
@@ -31,9 +37,9 @@ namespace StablerCharacter.RenderObjects
         {
             PollEvents();
 
-            Raylib.DrawRectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y, backgroundColor);
-            Vector2 textPosition = new Vector2(position.X + textLeftMargin, position.Y + size.Y / 4);
-            Raylib.DrawTextEx(textInfo.font, textInfo.text, textPosition, textInfo.fontSize, textInfo.textSpacing, textInfo.textColor);
+            Raylib.DrawRectangle((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y, BackgroundColor);
+            TextInfo.Position = new Vector2(Position.X + TextLeftMargin, Position.Y + Size.Y / 4);
+            base.Render();
         }
 
         public override void OnRemoved() { }

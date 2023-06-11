@@ -5,30 +5,19 @@ namespace StablerCharacter.Scenes
 {
     public sealed class GameScene : Scene
     {
-        public List<RenderObject> renderObjects = new();
-        public Color backgroundColor = Color.LIGHT_GRAY;
-        public Texture2D? backgroundImage;
+        public Color BackgroundColor = Color.LIGHT_GRAY;
+        public Texture2D? BackgroundImage;
 
-        public GameScene(DialogStyle dialogStyle, StoryManager storyManager)
+        public GameScene(DialogStyle dialogStyle)
         {
-            renderObjects.Add(new StoryDialog(dialogStyle, storyManager));
+            RenderObjects.Add(new StoryDialog(dialogStyle, GameManager.Story));
         }
 
-        public void OnLoad()
+        public override void Render()
         {
-            renderObjects.ForEach(x => x.OnStart());
-        }
-
-        public void OnUnload()
-        {
-            renderObjects.ForEach(x => x.OnRemoved());
-        }
-
-        public void Render()
-        {
-            Raylib.ClearBackground(backgroundColor);
-            if (backgroundImage != null) Raylib.DrawTexture((Texture2D)backgroundImage, 0, 0, Color.WHITE);
-            renderObjects.ForEach(x => x.Render());
+            Raylib.ClearBackground(BackgroundColor);
+            if (BackgroundImage != null) Raylib.DrawTexture((Texture2D)BackgroundImage, 0, 0, Color.WHITE);
+            base.Render();
         }
     }
 }

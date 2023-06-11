@@ -17,15 +17,19 @@ namespace StablerCharacter.Scenes
         readonly Button playButton = new(Color.BLACK, new Vector2(30, 75), new Vector2(100, 30), new TextInfo("Play"));
         readonly Button quitButton = new(Color.BLACK, new Vector2(30, 125), new Vector2(100, 30), new TextInfo("Quit"));
 
-        public void OnLoad()
+        public override void OnLoad()
         {
             playButton.OnClickEvent += PlayButton_OnClickEvent;
             quitButton.OnClickEvent += QuitButton_OnClickEvent;
+            RenderObjects.Add(playButton);
+            RenderObjects.Add(quitButton);
+
+            base.OnLoad();
         }
 
         private void QuitButton_OnClickEvent(object? sender, EventArgs e)
         {
-            Raylib.CloseWindow();
+            GameManager.RequestExit = true;
         }
 
         private void PlayButton_OnClickEvent(object? sender, EventArgs e)
@@ -34,15 +38,12 @@ namespace StablerCharacter.Scenes
             else SceneManager.LoadScene((ushort)nextSceneIndex);
         }
 
-        public void OnUnload() { }
-
-        public void Render()
+        public override void Render()
         {
             Raylib.ClearBackground(backgroundColor);
-            Raylib.DrawText(GameManager.gameConfig.gameName, 30, 30, 22, Color.WHITE);
+            Raylib.DrawText(GameManager.GameConfig.GameName, 30, 30, 22, Color.WHITE);
 
-            playButton.Render();
-            quitButton.Render();
+            base.Render();
         }
     }
 }

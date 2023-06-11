@@ -1,4 +1,5 @@
 ﻿using lizzie;
+using StablerCharacter.Events;
 
 namespace StablerCharacter
 {
@@ -6,7 +7,7 @@ namespace StablerCharacter
     /// A class to compile Lizzie (a scripting language, <see cref="https://github.com/polterguy/lizzie"/>)
     /// with some extensions method to make Lizzie usable for creating stories.
     /// </summary>
-    public sealed class StoryConstructor
+    public sealed partial class StoryConstructor
     {
         // A list of the chapters. An instance of a Chapter class contains basically the "branches" variable
         // defined below, and a chapter also has a string variable.
@@ -22,11 +23,17 @@ namespace StablerCharacter
         [Bind(Name = "dialog")]
         object? Dialog(Binder<StoryConstructor> _, Arguments arguments)
         {
-            dialogs.Add(new Dialog
+            Dialog dialog = new()
             {
-                message = arguments.Get<string>(0),
-                personSpeaking = arguments.Get<string>(1)
-            });
+                Message = arguments.Get<string>(0),
+                PersonSpeaking = arguments.Get<string>(1)
+            };
+            for (int i = 2; i < arguments.Count; i++)
+            {
+                dialog.Events += ((IDialogEvent)arguments.Get(i)).Triggered;
+            }
+
+            dialogs.Add(dialog);
             return null;
         }
 
