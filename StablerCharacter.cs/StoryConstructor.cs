@@ -1,4 +1,4 @@
-﻿using lizzie;
+using lizzie;
 using StablerCharacter.Events;
 
 namespace StablerCharacter
@@ -80,7 +80,7 @@ namespace StablerCharacter
 
         public static StoryManager compileFromString(string code)
         {
-            StoryConstructor storyConstructor = new StoryConstructor();
+            StoryConstructor storyConstructor = new();
             var lambda = LambdaCompiler.Compile(storyConstructor, code);
             lambda();
             return storyConstructor.FinalizeStory();
@@ -98,7 +98,7 @@ namespace StablerCharacter
 
         public static StoryManager compileFromFiles(params string[] paths)
         {
-            StoryConstructor storyConstructor = new StoryConstructor();
+            StoryConstructor storyConstructor = new();
             foreach (string path in paths)
             {
                 LambdaCompiler.Compile(storyConstructor, File.ReadAllText(path))();
